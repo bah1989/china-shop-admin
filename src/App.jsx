@@ -452,23 +452,34 @@ async function handleImageUpload(product, file, slotIndex = 0) {
               return (
                 <div key={p.id} style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 14 }}>
                   <div style={{ display: 'flex', gap: 12, marginBottom: 10 }}>
-                    <div style={{ position: 'relative', width: 64, height: 64, borderRadius: 10, background: '#F1F3F1', flexShrink: 0, overflow: 'hidden' }}>
-                      {p.image_url ? (
-                        <img src={p.image_url} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      ) : (
-                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: COLORS.textFaint, textAlign: 'center' }}>Pas d'image</div>
-                      )}
-                      <label style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                        <span style={{ color: '#fff', fontSize: 10, fontWeight: 600 }}>{uploadingId === p.id ? '…' : '📷'}</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(p, e.target.files?.[0])}
-                          style={{ display: 'none' }}
-                        />
-                      </label>
+                    <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
+                      {[0, 1, 2].map((slot) => (
+                        <div key={slot} style={{ position: 'relative', width: 44, height: 44, borderRadius: 8, background: '#F1F3F1', overflow: 'hidden' }}>
+                          {p.image_urls?.[slot] ? (
+                            <img src={p.image_urls[slot]} alt={`${p.name} ${slot + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: COLORS.textFaint }}>+</div>
+                          )}
+                          <label style={{ position: 'absolute', inset: 0, background: p.image_urls?.[slot] ? 'rgba(0,0,0,0.35)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                            <span style={{ color: p.image_urls?.[slot] ? '#fff' : 'transparent', fontSize: 9, fontWeight: 600 }}>{uploadingId === `${p.id}-${slot}` ? '…' : '📷'}</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleImageUpload(p, e.target.files?.[0], slot)}
+                              style={{ display: 'none' }}
+                            />
+                          </label>
+                        </div>
+                      ))}
                     </div>
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            
+                        
+                          
+                        
+                      
+                    
+    
                       <p style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>{p.name}</p>
                       <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: COLORS.textMuted }}>
                         <input
