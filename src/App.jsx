@@ -228,9 +228,10 @@ export default function App() {
     }
   }
 
-  async function handleImageUpload(product, file) {
+  
+async function handleImageUpload(product, file, slotIndex = 0) {
     if (!file) return
-    setUploadingId(product.id)
+    setUploadingId(`${product.id}-${slotIndex}`)
     try {
       const base64Data = await new Promise((resolve, reject) => {
         const reader = new FileReader()
@@ -243,15 +244,21 @@ export default function App() {
         fileName: file.name,
         base64Data,
         contentType: file.type,
+        slotIndex,
       })
-      editProduct(product.id, 'image_url', result.url)
+      setProducts((ps) => ps.map((p) => {
+        if (p.id !== product.id) return p
+        const urls = [...(p.image_urls || [])]
+        while (urls.length <= slotIndex) urls.push(null)
+        urls[slotIndex] = result.url
+        return { ...p, image_urls: urls, image_url: urls[0] || p.image_url }
+      }))
     } catch (e) {
       setError(e.message)
     } finally {
       setUploadingId(null)
     }
   }
-
   if (!loggedIn) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: COLORS.bg }}>
