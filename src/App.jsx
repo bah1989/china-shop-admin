@@ -456,8 +456,10 @@ async function handleImageUpload(product, file, slotIndex = 0) {
                       {[0, 1, 2].map((slot) => (
                         <div key={slot} style={{ position: 'relative', width: 44, height: 44, borderRadius: 8, background: '#F1F3F1', overflow: 'hidden' }}>
                           {p.image_urls?.[slot] ? (
-                            <img src={p.image_urls[slot]} alt={`${p.name} ${slot + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={p.image_urls[slot]} alt={`${p.name} ${slot + 1}`} style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
                           ) : (
+                            
+                        
                             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: COLORS.textFaint }}>+</div>
                           )}
                           <label style={{ position: 'absolute', inset: 0, background: p.image_urls?.[slot] ? 'rgba(0,0,0,0.35)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
