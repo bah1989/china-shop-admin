@@ -47,6 +47,11 @@ export default function App() {
   const [products, setProducts] = useState([])
   const [partners, setPartners] = useState([])
   const [communes, setCommunes] = useState([])
+  const [reviews, setReviews] = useState([])
+  
+  
+  
+  
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [savingId, setSavingId] = useState(null)
