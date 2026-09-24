@@ -716,6 +716,7 @@ async function handleImageUpload(product, file, slotIndex = 0) {
     </div>
   )
 }
+              
 
 function StatCard({ label, value, accent }) {
   return (
