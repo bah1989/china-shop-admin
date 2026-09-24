@@ -192,6 +192,17 @@ export default function App() {
     }
   }
 
+  async function toggleReviewVisibility(review) {
+    setReviews((rs) => rs.map((r) => (r.id === review.id ? { ...r, is_public: !r.is_public } : r)))
+    try {
+      await call(password, 'toggle_review_visibility', { id: review.id, is_public: !review.is_public })
+    } catch (e) {
+      setError(e.message)
+    }
+  }
+  
+    
+
   async function handleDeletePartner(partner) {
     if (!confirm(`Retirer ${partner.name} de l'équipe de livreurs ?`)) return
     setDeletingPartnerId(partner.id)
