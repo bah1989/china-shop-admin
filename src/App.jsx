@@ -76,13 +76,14 @@ export default function App() {
     setLoading(true)
     setError(null)
     try {
-     const [s, o, p, dp, c, rv] = await Promise.all([
+     const [s, o, p, dp, c, rv, vs] = await Promise.all([
         call(password, 'stats'),
         call(password, 'list_orders'),
         call(password, 'list_products'),
         call(password, 'list_delivery_partners'),
         call(password, 'list_communes'),
         call(password, 'list_reviews'),
+        call(password, 'visit_stats'),
       ])
       setStats(s.stats)
       setOrders(o.orders)
@@ -90,6 +91,11 @@ export default function App() {
       setPartners(dp.partners)
       setCommunes(c.communes)
       setReviews(rv.reviews) 
+      setVisitStats(vs)
+        
+      
+      
+      
         
       
     } catch (e) {
