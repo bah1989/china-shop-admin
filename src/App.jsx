@@ -361,6 +361,9 @@ async function handleImageUpload(product, file, slotIndex = 0) {
         {tab === 'orders' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {orders.map((o) => (
+        
+          
+            
               <div key={o.id} style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 14 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                   <p style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>
