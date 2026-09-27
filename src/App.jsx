@@ -352,10 +352,61 @@ async function handleImageUpload(product, file, slotIndex = 0) {
             )}
           </div>
         )}
+
+        {tab === 'visits' && visitStats && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 12 }}>
+              <StatCard label="Visites aujourd'hui" value={visitStats.todayVisits} />
+              <StatCard label="Visiteurs uniques (jour)" value={visitStats.uniqueToday} accent={COLORS.orange} />
+              <StatCard label="Visiteurs uniques (7j)" value={visitStats.unique7d} />
+              <StatCard label="Total visites" value={visitStats.totalVisits} />
+            </div>
+
+            <div style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 16 }}>
+              <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600 }}>Appareils</p>
+              {Object.entries(visitStats.deviceCounts || {}).map(([device, count]) => (
+                <div key={device} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: COLORS.textMuted, padding: '4px 0' }}>
+                  <span>{device === 'mobile' ? '📱 Mobile' : device === 'desktop' ? '💻 Ordinateur' : device}</span>
+                  <span style={{ fontWeight: 600, color: '#2C2C2A' }}>{count}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 16 }}>
+              <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600 }}>D'où viennent les visiteurs</p>
+              {Object.entries(visitStats.referrerCounts || {}).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([ref, count]) => (
+                <div key={ref} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: COLORS.textMuted, padding: '4px 0' }}>
+                  <span>{ref}</span>
+                  <span style={{ fontWeight: 600, color: '#2C2C2A' }}>{count}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 16 }}>
+              <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600 }}>Visites récentes</p>
+              {(visitStats.recent || []).map((v, i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: COLORS.textMuted, padding: '5px 0', borderTop: i > 0 ? `1px solid ${COLORS.border}` : 'none' }}>
+                  <span>{v.device_type === 'mobile' ? '📱' : '💻'} {v.path || '/'}</span>
+                  <span>{new Date(v.created_at).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
 }
+
+function StatCard
+              
+            
+          
+        
+      
+    
+  
+
               
 
 function StatCard
