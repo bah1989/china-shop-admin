@@ -347,8 +347,19 @@ async function handleImageUpload(product, file, slotIndex = 0) {
         <TabButton active={tab === 'orders'} onClick={() => setTab('orders')}>Commandes</TabButton>
         <TabButton active={tab === 'products'} onClick={() => setTab('products')}>Produits</TabButton>
         <TabButton active={tab === 'partners'} onClick={() => setTab('partners')}>Livreurs</TabButton>
-        <TabButton active={tab === 'reviews'} onClick={() => setTab('reviews')}>Avis</TabButton>
+        {partners.length === 0 && (
+              <p style={{ padding: 20, textAlign: 'center', fontSize: 13, color: COLORS.textFaint }}>Aucun livreur enregistré</p>
+            )}
+          </div>
+        )}
       </div>
+    </div>
+  )
+}
+              
+
+function StatCard
+      
       
 
       <div style={{ padding: '0 24px 40px' }}>
