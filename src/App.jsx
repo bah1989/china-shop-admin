@@ -49,6 +49,8 @@ export default function App() {
   const [communes, setCommunes] = useState([])
   const [reviews, setReviews] = useState([])
   const [visitStats, setVisitStats] = useState(null)
+  const [funnelStats, setFunnelStats] = useState(null)
+  const [funnelSource, setFunnelSource] = useState('all')
   const [loading, setLoading] = useState(false)
   
   
