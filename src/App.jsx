@@ -757,6 +757,53 @@ async function handleImageUpload(product, file, slotIndex = 0) {
                 </div>
               ))}
             </div>
+            {funnelStats && (
+              <div style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 16 }}>
+                <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600 }}>Tunnel de conversion (7 derniers jours)</p>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 14 }}>
+                  {funnelStats.sources.map((src) => (
+                    <span
+                      key={src}
+                      onClick={() => setFunnelSource(src)}
+                      style={{
+                        fontSize: 11, fontWeight: 600, padding: '5px 10px', borderRadius: 999, cursor: 'pointer',
+                        background: funnelSource === src ? COLORS.emerald : '#F1F3F1',
+                        color: funnelSource === src ? '#fff' : COLORS.textMuted,
+                      }}
+                    >
+                      {src}
+                    </span>
+                  ))}
+                </div>
+                {(() => {
+                  const STAGE_LABELS = { page_view: 'Visite', product_view: 'Vue produit', add_to_cart: 'Ajout panier', checkout_start: 'Début checkout', order_completed: 'Commande validée' }
+                  const counts = funnelStats.counts[funnelSource] || {}
+                  const maxCount = Math.max(...funnelStats.stages.map((s) => counts[s] || 0), 1)
+                  return funnelStats.stages.map((stage, i) => {
+                    const value = counts[stage] || 0
+                    const prevValue = i === 0 ? value : (counts[funnelStats.stages[i - 1]] || 0)
+                    const dropRate = prevValue > 0 ? Math.round((1 - value / prevValue) * 100) : 0
+                    const widthPct = Math.round((value / maxCount) * 100)
+                    return (
+                      <div key={stage} style={{ marginBottom: 12 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: COLORS.textMuted, marginBottom: 4 }}>
+                          <span>{STAGE_LABELS[stage]}</span>
+                          <span>
+                            <strong style={{ color: '#2C2C2A' }}>{value}</strong>
+                            {i > 0 && (
+                              <span style={{ color: dropRate > 50 ? '#C0392B' : COLORS.textFaint, marginLeft: 8 }}>(-{dropRate}%)</span>
+                            )}
+                          </span>
+                        </div>
+                        <div style={{ background: '#F1F3F1', borderRadius: 6, height: 16, overflow: 'hidden' }}>
+                          <div style={{ width: `${widthPct}%`, background: COLORS.emerald, height: '100%', borderRadius: 6 }} />
+                        </div>
+                      </div>
+                    )
+                  })
+                })()}
+              </div>
+            )}
 
             <div style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 16 }}>
               <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600 }}>D'où viennent les visiteurs</p>
