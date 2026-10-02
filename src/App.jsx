@@ -51,7 +51,15 @@ export default function App() {
   const [visitStats, setVisitStats] = useState(null)
   const [funnelStats, setFunnelStats] = useState(null)
   const [funnelSource, setFunnelSource] = useState('all')
+  const [priceComparison, setPriceComparison] = useState(null)
+  const [pcProductId, setPcProductId] = useState('')
+  const [pcJumiaPrice, setPcJumiaPrice] = useState('')
+  const [pcWebPrice, setPcWebPrice] = useState('')
+  const [pcActive, setPcActive] = useState(false)
+  const [savingComparison, setSavingComparison] = useState(false)
   const [loading, setLoading] = useState(false)
+  
+  
   
   
   
