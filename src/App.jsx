@@ -825,7 +825,68 @@ async function handleImageUpload(product, file, slotIndex = 0) {
               ))}
             </div>
           </div>
-        )}
+      )}
+      {tab === 'comparison' && (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+    <div style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 16 }}>
+      <p style={{ margin: '0 0 4px', fontSize: 13, fontWeight: 600 }}>Bannière de comparaison de prix</p>
+      <p style={{ margin: '0 0 16px', fontSize: 12, color: COLORS.textFaint }}>Mise à jour manuelle — vérifiez vous-même les prix avant d'enregistrer. La date de vérification s'affiche automatiquement aux clients.</p>
+
+      <p style={{ margin: '0 0 4px', fontSize: 11, color: COLORS.textMuted }}>Article China Shop</p>
+      <select
+        value={pcProductId}
+        onChange={(e) => setPcProductId(e.target.value)}
+        style={{ width: '100%', fontSize: 13, padding: '8px 10px', borderRadius: 8, border: `1px solid ${COLORS.border}`, boxSizing: 'border-box', marginBottom: 12 }}
+      >
+        <option value="">— Choisir un article —</option>
+        {products.map((p) => (
+          <option key={p.id} value={p.id}>{p.name} ({Number(p.wholesale_price).toLocaleString('fr-FR')} FCFA)</option>
+        ))}
+      </select>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 12 }}>
+        <div>
+          <p style={{ margin: '0 0 4px', fontSize: 11, color: COLORS.textMuted }}>Prix sur Jumia (FCFA)</p>
+          <input
+            type="number"
+            value={pcJumiaPrice}
+            onChange={(e) => setPcJumiaPrice(e.target.value)}
+            style={{ width: '100%', fontSize: 13, padding: '8px 10px', borderRadius: 8, border: `1px solid ${COLORS.border}`, boxSizing: 'border-box' }}
+          />
+        </div>
+        <div>
+          <p style={{ margin: '0 0 4px', fontSize: 11, color: COLORS.textMuted }}>Prix ailleurs sur le net (FCFA)</p>
+          <input
+            type="number"
+            value={pcWebPrice}
+            onChange={(e) => setPcWebPrice(e.target.value)}
+            style={{ width: '100%', fontSize: 13, padding: '8px 10px', borderRadius: 8, border: `1px solid ${COLORS.border}`, boxSizing: 'border-box' }}
+          />
+        </div>
+      </div>
+
+      <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: COLORS.textMuted, marginBottom: 16 }}>
+        <input type="checkbox" checked={pcActive} onChange={(e) => setPcActive(e.target.checked)} />
+        Afficher la bannière sur le site
+      </label>
+
+      {priceComparison?.verified_at && (
+        <p style={{ margin: '0 0 12px', fontSize: 11, color: COLORS.textFaint }}>
+          Dernière vérification : {new Date(priceComparison.verified_at).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+        </p>
+      )}
+
+      <button
+        onClick={savePriceComparison}
+        disabled={savingComparison || !pcProductId}
+        style={{ width: '100%', background: COLORS.emerald, color: '#fff', border: 'none', borderRadius: 8, padding: 10, fontSize: 13, fontWeight: 600, opacity: (savingComparison || !pcProductId) ? 0.6 : 1 }}
+      >
+        {savingComparison ? 'Enregistrement…' : 'Enregistrer et mettre à jour la date de vérification'}
+      </button>
+    </div>
+  </div>
+)}
+  
       </div>
     </div>
   )
