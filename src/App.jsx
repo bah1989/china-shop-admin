@@ -353,7 +353,9 @@ async function handleImageUpload(product, file, slotIndex = 0) {
         <TabButton active={tab === 'partners'} onClick={() => setTab('partners')}>Livreurs</TabButton>
         <TabButton active={tab === 'reviews'} onClick={() => setTab('reviews')}>Avis</TabButton>
         <TabButton active={tab === 'visits'} onClick={() => setTab('visits')}>Visiteurs</TabButton>
+        <TabButton active={tab === 'comparison'} onClick={() => setTab('comparison')}>Comparaison</TabButton>
       </div>
+      
 
       <div style={{ padding: '0 24px 40px' }}>
         {tab === 'orders' && (
