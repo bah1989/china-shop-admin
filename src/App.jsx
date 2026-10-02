@@ -212,6 +212,31 @@ export default function App() {
       setError(e.message)
     }
   }
+
+  async function savePriceComparison() {
+    setSavingComparison(true)
+    setError(null)
+    try {
+      await call(password, 'update_price_comparison', {
+        product_id: pcProductId || null,
+        jumia_price: pcJumiaPrice ? Number(pcJumiaPrice) : null,
+        web_price: pcWebPrice ? Number(pcWebPrice) : null,
+        is_active: pcActive,
+      })
+      await refresh()
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setSavingComparison(false)
+    }
+  }
+    
+    
+      
+    
+      
+    
+  
   
     
 
