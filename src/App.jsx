@@ -78,7 +78,7 @@ export default function App() {
     setLoading(true)
     setError(null)
     try {
-     const [s, o, p, dp, c, rv, vs, fs] = await Promise.all([
+     const [s, o, p, dp, c, rv, vs, fs, pc] = await Promise.all([
         call(password, 'stats'),
         call(password, 'list_orders'),
         call(password, 'list_products'),
@@ -87,6 +87,7 @@ export default function App() {
         call(password, 'list_reviews'),
         call(password, 'visit_stats'),
         call(password, 'funnel_stats'),
+        call(password, 'get_price_comparison'),
       ])
       setStats(s.stats)
       setOrders(o.orders)
@@ -96,6 +97,13 @@ export default function App() {
       setReviews(rv.reviews) 
       setVisitStats(vs)
       setFunnelStats(fs)
+      setPriceComparison(pc.comparison)
+      setPcProductId(pc.comparison?.product_id || '')
+      setPcJumiaPrice(pc.comparison?.jumia_price || '')
+      setPcWebPrice(pc.comparison?.web_price || '')
+      setPcActive(pc.comparison?.is_active || false)
+        
+      
         
       
       
