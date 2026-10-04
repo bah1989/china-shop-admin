@@ -57,7 +57,9 @@ export default function App() {
   const [pcWebPrice, setPcWebPrice] = useState('')
   const [pcActive, setPcActive] = useState(false)
   const [savingComparison, setSavingComparison] = useState(false)
+  const [viewCounts, setViewCounts] = useState({})
   const [loading, setLoading] = useState(false)
+  
   
   
   
