@@ -86,7 +86,7 @@ export default function App() {
     setLoading(true)
     setError(null)
     try {
-     const [s, o, p, dp, c, rv, vs, fs, pc] = await Promise.all([
+     const [s, o, p, dp, c, rv, vs, fs, pc, vcResp] = await Promise.all([
         call(password, 'stats'),
         call(password, 'list_orders'),
         call(password, 'list_products'),
@@ -96,16 +96,32 @@ export default function App() {
         call(password, 'visit_stats'),
         call(password, 'funnel_stats'),
         call(password, 'get_price_comparison'),
+        fetch('https://beoeatxlyddmouruqotg.supabase.co/functions/v1/product-view-counts', { method: 'POST' }).then((r) => r.json()),
       ])
       setStats(s.stats)
+      const vc = vcResp.counts || {}
+      setViewCounts(vc)
       setOrders(o.orders)
-      setProducts(p.products)
+      setProducts([...p.products].sort((a, b) => (vc[b.id] || 0) - (vc[a.id] || 0)))
       setPartners(dp.partners)
       setCommunes(c.communes)
       setReviews(rv.reviews) 
       setVisitStats(vs)
       setFunnelStats(fs)
       setPriceComparison(pc.comparison)
+        
+        
+        
+      
+      
+      
+      
+      
+      
+    
+      
+      
+      
       setPcProductId(pc.comparison?.product_id || '')
       setPcJumiaPrice(pc.comparison?.jumia_price || '')
       setPcWebPrice(pc.comparison?.web_price || '')
