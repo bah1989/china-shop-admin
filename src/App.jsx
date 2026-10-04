@@ -572,7 +572,13 @@ async function handleImageUpload(product, file, slotIndex = 0) {
                       
                     
     
-                      <p style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>{p.name}</p>
+                      
+                      <p style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>
+                        {p.name}
+                        {viewCounts[p.id] > 0 && (
+                          <span style={{ marginLeft: 8, fontSize: 11, fontWeight: 600, color: COLORS.textFaint }}>👁 {viewCounts[p.id]} vue{viewCounts[p.id] > 1 ? 's' : ''}</span>
+                        )}
+                      </p>
                       <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: COLORS.textMuted }}>
                         <input
                           type="checkbox"
